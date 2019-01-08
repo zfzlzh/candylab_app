@@ -95,5 +95,12 @@
     text-overflow:ellipsis;
  
  }
+ .mui-card,.msg{
+    box-shadow:6px 6px 11px rgba(0, 0, 0, .3)
+ }
+ .mui-card-header{
+     color:rgba(0, 0, 0, 0.781);
+     font-weight: bold
+ }
  </style>
  

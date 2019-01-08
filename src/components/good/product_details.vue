@@ -62,6 +62,7 @@
                 </div>
             </div>
         </div>
+        <div class="star"></div>
         <div class="details-info">
                 <div class="info-pic" v-for = "ipic of info" :key="ipic.iid">
                         <img :src="ipic.pic" alt="">

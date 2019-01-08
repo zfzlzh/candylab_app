@@ -109,9 +109,7 @@ header>p{
     top:-5rem;
     width:100%
 }
-.mui-card{
-    box-shadow:4px 4px 4px rgba(0, 0, 0, .3)
-}
+
 .cart .mui-card{
     height:9rem;
     border-radius:10px;

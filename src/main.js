@@ -4,9 +4,11 @@ import router from './router'
 import icons from './assets/icon/iconfont.js'
 import icons_user from './assets/icon/user_iconfont.js'
 import icons_info from './assets/icon/info_iconfont.js'
+import rightOrWrong from './assets/icon/rightOrWrong.js'
+import camera from './assets/icon/camera.js'
+import store from './store/store.js'
 import {Toast} from "mint-ui";
 
-import'mint-ui/assets/style.css'
 Vue.config.productionTip = false
 
 // 导入 MUI 的样式表， 和 Bootstrap 用法没有差别
@@ -17,55 +19,56 @@ import './assets/mui/css/icons-extra.css'
 
 
 
-//引入Vuex
-import Vuex from "vuex"
-//注册Vuex组件
-Vue.use(Vuex)
-//创建Vuex实例对象
-var store = new Vuex.Store({
-  state:{
-    cartCount:0,   //购物车中商品的数量
-    isLogin:false,
-    uname:"",
-    currentUser:null,//当前用户
+// //引入Vuex
+// import Vuex from "vuex"
+// //注册Vuex组件
+// Vue.use(Vuex)
+// //创建Vuex实例对象
+// var store = new Vuex.Store({
+//   state:{
+//     cartCount:0,   //购物车中商品的数量
+//     isLogin:false,
+//     uname:"",
+//     currentUser:null,//当前用户
     
-  },
-  mutations:{//修改共享数据的方法
-    increment(state,count){state.cartCount+=count},
-    substract(state){state.cartCount--},
-    clear(state){state.cartCount = 0},
-    userStatus(state,user){
-      if(user){
-        state.currentUser=user;
-        state.isLogin = true;
+//   },
+//   mutations:{//修改共享数据的方法
+//     increment(state,count){state.cartCount+=count},
+//     substract(state){state.cartCount--},
+//     clear(state){state.cartCount = 0},
+//     userStatus(state,user){
+//       if(user){
+//         state.currentUser=user;
+//         state.isLogin = true;
        
-      }else if(user==null){
-        sessionStorage.setItem("uname","");
-        state.currentUser = null;
-        state.isLogin = false;
+//       }else if(user==null){
+//         sessionStorage.setItem("uname","");
+//         state.currentUser = null;
+//         state.isLogin = false;
         
-      }
-    }
-  },
-  getters:{//获取共享数据方法
-    optCartCount:function(state){
-    return state.cartCount;
-  },
-  isLogin:function(state){
-   return state.isLogin
-  },
-  currentUser:function(state){
-  return  state.currentUser
-  }
-},
- actions:{
-   setUser({commit},user){
-     commit("userStatus",user)
-   }
- }
+//       }
+//     }
+//   },
+//   getters:{//获取共享数据方法
+//     optCartCount:function(state){
+//     return state.cartCount;
+//   },
+//   isLogin:function(state){
+//    return state.isLogin
+//   },
+//   currentUser:function(state){
+//   return  state.currentUser
+//   }
+// },
+// //将Vuex对象注册Vue对象
+//  actions:{
+//    setUser({commit},user){
+//      commit("userStatus",user)
+//    }
+//  }
 
-})
-//将Vuex对象注册Vue对象
+// })
+
 //sessionstorage
 router.beforeEach((to,from,next)=>{
  if(to.meta.needLogin){

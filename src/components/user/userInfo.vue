@@ -11,10 +11,15 @@
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right">
 							<div class="user-info">
-                                <div><img src="" alt=""></div>
+                                    <div class="avatar" v-show="!hasPic">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-morentouxiang"></use>
+                                            </svg>
+                                    </div>
+                                <div v-show="hasPic" class="avatar"><img :src="list[0].avatar" alt=""></div>
                                 <div>
-                                    <p>昵称</p>
-                                    <p>账号</p>
+                                    <p>{{list[0].nickname}}</p>
+                                    <p>账号名：{{list[0].uname}}</p>
                                 </div>
                             </div>
 						</a>
@@ -71,7 +76,10 @@
     import {Toast} from "mint-ui"
     export default {
         data(){
-            return{}
+            return{
+                list:[{items:"加载中...",text:"加载中..."}],
+                hasPic:"false"
+            }
         },
         methods:{
             back(){
@@ -81,8 +89,31 @@
                 sessionStorage.removeItem("uname");
                 Toast("注销成功");
                 this.$router.go(-1)
+            },
+            getUname(){
+                if(sessionStorage.getItem('uname')){
+                    let uname = sessionStorage.getItem('uname');
+                    console.log(uname)
+                let u_url = "http://127.0.0.1:3000/getMsg?uname="+uname;
+                this.axios.get(u_url).then(res=>{
+                    if(res.data.length>0){
+                        this.list = res.data;
+                        if(res.data.avatar == ""){
+                            this.hasPic = false
+                        }else{
+                            this.hasPic = true
+                        }
+                    }else{
+                        Toast(res.msg)
+                    }
+                })
             }
-        }
+                }
+                
+        },
+        created() {
+            this.getUname()
+        },
     }
 </script>
 <style scoped>
@@ -101,8 +132,16 @@
     display:flex;
 
 }
-.user-info>div:first-child{
+.avatar{
     width:35%
+}
+.avatar>svg
+{
+    width:4rem;
+    height:4rem
+}
+.avatar>img{
+    border-radius: 50%
 }
 .user-info>div:last-child>p:first-child{
     font-size:18px;

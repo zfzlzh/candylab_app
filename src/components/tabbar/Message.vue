@@ -108,9 +108,6 @@ header>p{
     height:7rem;
      
 }
-.msg,.top_line,.all_msg{
-    box-shadow:4px 4px 4px rgba(0, 0, 0, .3)
-}
 .msg>div{
     background:#fff;
     width:33.3333%;

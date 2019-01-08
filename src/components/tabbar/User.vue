@@ -118,6 +118,9 @@
                     </div>
                 </div>
         </section>
+        <section>
+
+        </section>
     </div>
 </template>
 <script>
@@ -135,7 +138,7 @@
                     let uname = sessionStorage.getItem('uname');
                 let u_url = "http://127.0.0.1:3000/getMsg?uname="+uname;
                 this.axios.get(u_url).then(res=>{
-                    console.log(res.data.length)
+                    
                     if(res.data.length>0){
                         this.list = res.data;
                         if(res.data.avatar == ""){
@@ -143,7 +146,7 @@
                         }else{
                             this.hasPic = true
                         }
-                        console.log(res.data)
+                       
                     }else{
                         Toast(res.msg)
                     }
@@ -156,6 +159,7 @@
             isLogin(){
                if(sessionStorage.getItem('uname')){
                    this.$store.commit("userStatus",sessionStorage.getItem('uname')); 
+                   console.log(this.$store.getters.isLogin)
                }else{
                    this.$store.commit("userStatus",null);
                }

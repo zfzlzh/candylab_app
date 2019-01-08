@@ -14,23 +14,23 @@
             <ul class="mui-table-view mui-grid-view mui-grid-9">
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"> 
                 <router-link to="/products">
-                    <img src='img/small/c1.png'/>
+                    <img src='static/small/c1.png'/>
                         <div class="mui-media-body">新品上市</div></router-link></li>
                     <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                     <router-link to="/GoodsList"> 
-                    <img src='img/small/c2.png'/>
+                    <img src='static/small/c2.png'/>
                         <div class="mui-media-body">进口好货</div></router-link></li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src='img/small/c4.png'/>
+                    <img src='static/small/c4.png'/>
                         <div class="mui-media-body">童年回忆</div></a></li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src='img/small/chocolate1.png'/>
+                    <img src='static/small/chocolate1.png'/>
                         <div class="mui-media-body">巧克力</div></a></li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src='img/small/c5.png'/>
+                    <img src='static/small/c5.png'/>
                         <div class="mui-media-body">人气热卖</div></a></li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src='img/small/c6.png'/>
+                    <img src='static/small/c6.png'/>
                         <div class="mui-media-body">商品推荐</div></a></li>
             </ul> 
         </div>
@@ -122,7 +122,7 @@
    section{
        margin-top:1rem;
    }
-.home .mint-swipe,.home .mui-content ul,.mui-card{
+.home .mint-swipe,.home .mui-content ul{
     box-shadow:5px 6px 3px rgba(0, 0, 0, .3)
 }
 

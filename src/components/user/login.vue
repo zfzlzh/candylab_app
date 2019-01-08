@@ -2,14 +2,13 @@
     <div>
         <header>
             <div>
-                <a><span class="mui-icon mui-icon-back"></span></a>
-                <p>注册</p>
+                <a @click="back"><span class="mui-icon mui-icon-back"></span></a>
+                <router-link to="/reg">注册</router-link>
             </div>
         </header>
         <section class="login_wd">
              <div>
                 <h4>请登陆</h4>
-                <a href="register.html" class="">新用户注册</a>
             </div>
             <div class="info">
                 <div>
@@ -44,20 +43,19 @@ import {Toast} from "mint-ui";
             }
         },
         methods:{
+            back(){
+                this.$router.go(-1)
+            },
             singin(){
                 let uname = this.uname;
                 let upwd = this.upwd;
                 let url = "http://127.0.0.1:3000/login?uname="+uname+"&upwd="+upwd;
                 this.axios.get(url).then(result=>{
                     if(result.data.length>0){
-                       
                         let user = result.data[0].uname;
-                        console.log(user)
                         sessionStorage.setItem('uname',user)
-                       
                         this.$store.dispatch("setUser",user);
-                        
-                       this.$router.push("/User");
+                       this.$router.go(-1);
                     }else{
                         Toast(result.msg)
                     }
@@ -77,6 +75,14 @@ import {Toast} from "mint-ui";
        justify-content: space-between;
         width:90%;
         margin: 0.1rem  1rem ;
+    }
+    header>div>a:first-child{
+        margin:-0.5rem 0 0.5rem 0;
+    }
+    header>div>a:last-child{
+        font-size:22px;
+        margin-top:-0.5rem;
+        color:#fff
     }
     header>div>p,header>div>a>span{
         font-size:18px;
