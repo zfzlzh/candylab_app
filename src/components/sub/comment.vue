@@ -15,7 +15,9 @@
           <div class="mui-card send">
               <div class="mui-card-header title">
                   <div><img src="" alt=""></div>
-                  <div></div>
+                  <div><svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-xingxing"></use>
+                  </svg></div>
               </div>
               <div class="mui-card-content">
                 <div class="mui-card-content-inner">
@@ -40,8 +42,12 @@
                 <div class="mui-card-header">评价</div>
                 <div class="mui-card-content">
                   <div class="mui-card-content-inner">
-                    <div><p>服务评价</p></div>
-                    <div><p>物流评价</p></div>
+                    <div><p>服务评价</p><p><svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-xingxing"></use>
+                    </svg></p></div>
+                    <div><p>物流评价</p><p><svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-xingxing"></use>
+                    </svg></p></div>
                   </div>
                 </div>
               </div>
@@ -54,9 +60,6 @@ import {Toast} from "mint-ui"
     data(){
       return {
         list:[],
-        pno:0,
-        pageSize:7, //页大小
-        pageCount:3, //总页数
         msg:""   //评论内容双向绑定
       }
     },
@@ -167,7 +170,15 @@ import {Toast} from "mint-ui"
     .score .mui-card-content-inner{
     padding:1rem 0 0.4rem
     }
+    .score .mui-card-content-inner>div{
+      display:flex
+    }
 .score .mui-card-content-inner>div>p{
   font-size:17px
+}
+.score .mui-card-content-inner>div>p>svg,.title div svg{
+  width:2rem;
+  height:2rem;
+  margin:-0.5rem 0 0 1rem
 }
 </style>

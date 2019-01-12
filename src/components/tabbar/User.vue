@@ -13,9 +13,9 @@
                           </svg>
                     </div>
                     <div class="avatar" v-show="hasPic">
-                        <img :src="list[0].avatar" alt="">
+                        <img :src="list.avatar" alt="">
                     </div>
-                    <div class="nickname">{{list[0].nickname}}</div>
+                    <div class="nickname">{{list.nickname}}</div>
                     <div class="other">
                         
                             <router-link to="/userInfo"><span class="mui-icon mui-icon-gear"></span></router-link> 
@@ -42,7 +42,10 @@
         <section>
             <div class="vip">
                 <div>
-                    <img src="" alt="">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-iconzhengli-
+                        "></use>
+                      </svg>
                     <p>星星糖 529</p>
                 </div>
                 <div>
@@ -74,11 +77,11 @@
                                         <use xlink:href="#icon-yifahuo"></use>
                                       </svg>
                                         <div class="mui-media-body">待收货</div></a></li>
-                                <li class=" mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                                <li class=" mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/comment">
                                     <svg class="icon" aria-hidden="true">
                                         <use xlink:href="#icon-pingjia"></use>
                                       </svg>
-                                        <div class="mui-media-body">评价</div></a></li>
+                                        <div class="mui-media-body">待评价</div></router-link></li>
                                 <li class=" mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
                                     <svg class="icon" aria-hidden="true">
                                         <use xlink:href="#icon-shouhou"></use>
@@ -134,32 +137,15 @@
         },
         methods: {
             getUname(){
-                if(sessionStorage.getItem('uname')){
-                    let uname = sessionStorage.getItem('uname');
-                let u_url = "http://127.0.0.1:3000/getMsg?uname="+uname;
-                this.axios.get(u_url).then(res=>{
-                    
-                    if(res.data.length>0){
-                        this.list = res.data;
-                        if(res.data.avatar == ""){
-                            this.hasPic = false
-                        }else{
-                            this.hasPic = true
-                        }
-                       
-                    }else{
-                        Toast(res.msg)
-                    }
-                })
+                let name = JSON.parse(sessionStorage.getItem('uname'));
+                this.list = name
             }
-                }
-                
         },
         computed: {
             isLogin(){
                if(sessionStorage.getItem('uname')){
                    this.$store.commit("userStatus",sessionStorage.getItem('uname')); 
-                   console.log(this.$store.getters.isLogin)
+                   this.getUname()  
                }else{
                    this.$store.commit("userStatus",null);
                }
@@ -168,7 +154,7 @@
            
         },
           created() {
-            this.getUname()  
+           
           }, 
        
             
@@ -183,7 +169,7 @@
     }
 /*登陆与注册*/
 header{
-    height:12.2rem;
+    height:15.2rem;
     background-image:linear-gradient(
         0deg,rgb(224, 143, 143) 0%,rgb(231, 93, 93) 50%,rgba(248, 65, 59, 0.842) 100%);
 }
@@ -254,8 +240,8 @@ margin-left:2rem
 .vip{
     display:flex;
     position: absolute;
-    top:10.9rem;
-    left:1.2rem;
+    top:11.9rem;
+    left:1.5rem;
     width:90%;
 }
 .vip>div{
@@ -265,16 +251,22 @@ margin-left:2rem
     text-align: center;
     padding:0.3rem 0 
 }
+.vip>div>svg{
+    width:2.5rem;
+    height:2.5rem;
+    margin-left:1.5rem;
+}
 .vip>div:nth-child(1),.vip>div:nth-child(3){
     width:25%
 }
 .vip>div:nth-child(1){
     border-top-left-radius:15%;
     border-bottom-left-radius:15%;
+    padding:0.5rem
 }
 .vip>div:nth-child(2){
     width:50%;
-    
+    padding-top:1rem
 }
 .vip>div:nth-child(2)>p:last-child{
     font-size:10px
@@ -311,7 +303,7 @@ margin-left:2rem
 {
         width:1.5rem;
         height:1.5rem;
-        margin:0.6rem 1.3rem 0
+        margin:0.6rem 1.8rem 0
     }
 .buy .mui-content ul li a div{
 font-size:10px;

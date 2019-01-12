@@ -34,7 +34,10 @@
                 <div class="top_line mui-card" >
                     <div class="mui-card-content">
                         <div class="mui-card-content-inner">
-                            <div class="msg_pic"></div>
+                            <div class="msg_pic"><svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-xinwen
+                                "></use>
+                              </svg></div>
                             <div class="msg_content">
                                 <p>头条新闻</p>
                                 <p>星星糖可换千元红包！快来鸭！</p>
@@ -51,7 +54,9 @@
                     </div>
                     <div class="get_msg mui-card-content">
                         <div class="mui-card-content-inner">
-                                <div class="msg_pic"></div>
+                                <div class="msg_pic"><svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-pingjia"></use>
+                                  </svg></div>
                                 <div class="msg_content">
                                     <p>名字</p>
                                     <p>内容</p>
@@ -161,7 +166,17 @@ header>p{
     display:flex;
 }
 .msg_pic{
-    width:25%
+    width:25%;
+    background:rgb(240, 164, 93);
+    border-radius: 10%;
+    text-align: center;
+    padding:1rem 0rem;
+    
+}
+.msg_pic>svg{
+    width:3rem;
+    height:3rem;
+   color:rgb(218, 43, 43)
 }
 .msg_date{
     width:15%;
@@ -169,7 +184,8 @@ header>p{
     color:#444
 }
 .msg_content{
-    width:60%
+    width:60%;
+    padding:0.5rem 0 0 1rem
 }
 .msg_content>p{
     font-size: 18px;

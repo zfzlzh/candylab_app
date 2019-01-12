@@ -52,7 +52,8 @@ import {Toast} from "mint-ui";
                 let url = "http://127.0.0.1:3000/login?uname="+uname+"&upwd="+upwd;
                 this.axios.get(url).then(result=>{
                     if(result.data.length>0){
-                        let user = result.data[0].uname;
+                        let user =JSON.stringify(result.data[0]);
+                        console.log(user)
                         sessionStorage.setItem('uname',user)
                         this.$store.dispatch("setUser",user);
                        this.$router.go(-1);
@@ -91,7 +92,7 @@ import {Toast} from "mint-ui";
 .login_wd{
     width:20rem;
     line-height: 2.5rem;
-    margin:7rem auto 14rem;
+    margin:11rem auto 14rem;
 
     }
     .login_wd div:first-child,.login_wd div:nth-child(3){

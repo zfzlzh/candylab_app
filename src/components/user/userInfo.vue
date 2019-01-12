@@ -16,10 +16,10 @@
                                                 <use xlink:href="#icon-morentouxiang"></use>
                                             </svg>
                                     </div>
-                                <div v-show="hasPic" class="avatar"><img :src="list[0].avatar" alt=""></div>
+                                <div v-show="hasPic" class="avatar"><img :src="list.avatar" alt=""></div>
                                 <div>
-                                    <p>{{list[0].nickname}}</p>
-                                    <p>账号名：{{list[0].uname}}</p>
+                                    <p>{{list.nickname}}</p>
+                                    <p>账号名：{{list.uname}}</p>
                                 </div>
                             </div>
 						</a>
@@ -91,23 +91,8 @@
                 this.$router.go(-1)
             },
             getUname(){
-                if(sessionStorage.getItem('uname')){
-                    let uname = sessionStorage.getItem('uname');
-                    console.log(uname)
-                let u_url = "http://127.0.0.1:3000/getMsg?uname="+uname;
-                this.axios.get(u_url).then(res=>{
-                    if(res.data.length>0){
-                        this.list = res.data;
-                        if(res.data.avatar == ""){
-                            this.hasPic = false
-                        }else{
-                            this.hasPic = true
-                        }
-                    }else{
-                        Toast(res.msg)
-                    }
-                })
-            }
+               let info = JSON.parse(sessionStorage.getItem("uname"));
+               this.list = info
                 }
                 
         },
@@ -157,7 +142,7 @@ footer{
     width:100%;
    
     position:absolute;
-    top:37rem;
+    top:46rem;
     z-index:990
 
 }

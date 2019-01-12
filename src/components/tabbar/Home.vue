@@ -59,7 +59,7 @@
                              <img :src="pro.pic">
                              <p>{{pro.pname}}</p>
                              <div>
-                                <p>￥{{pro.price}}</p><span>付款人数{{pro.buyer}}</span>
+                                <p>￥{{pro.price | filterMoney}}</p><span>付款人数{{pro.buyer}}</span>
                             </div>
                          </router-link>
                             </div>
@@ -169,8 +169,7 @@
  /*详情*/
 .mui-card{
       background:rgba(255, 255, 255, 0.55);
-      border-radius:5%;
-      
+      border-radius:5%; 
   }
 
  .mui-card-content-inner{
@@ -186,8 +185,8 @@
   
 }
 .mui-card-content-inner>div{
- width:10rem;
-    height:15rem;
+ width:13rem;
+    height:21rem;
 }
 .mui-card-content-inner div p{
    line-height:3rem;
@@ -204,8 +203,8 @@
     height:18rem;
 }
 .mui-card-content>.mui-card-content-inner>.time_low>div{
-    width:8rem;
-    height:5rem;
+    width:10rem;
+    height:10rem;
 }
 .time_low>div>img{
     width:9rem;
@@ -230,7 +229,9 @@
    
 }
 .maybe div div div a div span{
-    margin-top:0.8rem;
+    margin-right:-0.4rem;
+    flex-wrap:wrap;
+    width:5rem
 }
 .maybe div div div:nth-child(2n){
     margin-left:1rem;

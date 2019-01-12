@@ -22,7 +22,7 @@ export default new Router({
     {path:'/User',component:User},
     {path:'/reg',component:reg},
     {path:'/product_details',component:product_details},
-    {path:'/comment',component:comment},
+    {path:'/comment',component:comment,meta:{needLogin:true}},
     {path:'/Message',component:Message,meta:{needLogin:true}},
     {path:'/Cart',component:Cart,meta:{needLogin:true}},
     {path:'/userInfo',component:userInfo,meta:{needLogin:true}}

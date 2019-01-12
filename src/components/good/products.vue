@@ -2,36 +2,95 @@
     <div>
     <header-box></header-box>
 <section>
-    
-    <div class="pro-top">
-        <div ><a>全部</a></div>
-        <div ><a>本周热卖</a></div>
-    </div>
-    <div class="product">
-     <div class="select">
-        <div>综合<i></i></div>
-        <div>销量<i></i></div>
-        <div>筛选<i></i></div>
-    </div>
-    <div class="pro-content">
-        <div class="pro-card" v-for="pro of list" :key="pro.buyer+pro.hot">
-            <a>
-                <div class="pic_frame">
-                    <img :src="pro.pic"/>
-                </div>
-                <div class="info_frame">
-                    <p>{{pro.pname}}</p>
-                    <div>
-                        <p>￥{{pro.price}}</p> 
-                        <span>付款人数：{{pro.buyer}}</span> 
+        <div data-am-widget="tabs" class="am-tabs am-tabs-d2">
+       <ul class="am-tabs-nav am-cf">
+           <li class="am-active"><a href="[data-tab-panel-0]">全部</a></li>
+           <li class=""><a href="[data-tab-panel-1]">本周热卖</a></li>
+       </ul>
+       <nav data-am-widget="menu" class="am-menu  am-menu-default"> 
+            <a href="javascript: void(0)" class="am-menu-toggle">
+                    <i class="am-menu-toggle-icon am-icon-bars"></i>
+              </a>
+              <ul class="am-menu-nav am-avg-sm-3">
+                  <li class="am-parent">
+                    <a  class="" >综合</a>
+                      <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
+                        <li class="">
+                            <a  class="" >综合</a>
+                        </li>
+                          <li class="">
+                            <a  class="" >好评</a>
+                          </li>
+                          <li class="">
+                            <a  class="" >购买人数</a>
+                          </li>
+                          <li class="">
+                            <a  class="" >质量优先</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="am-parent">
+                    <a  class="" >销量</a>
+                      <ul class="am-menu-sub am-collapse  am-avg-sm-3 ">
+                          <li class="">
+                            <a  class="" >按销量从高到低</a>
+                          </li>
+                          <li class="">
+                            <a  class="" >按销量从低到高</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="am-parent">
+                    <a href="#c3" class="" >价格</a>
+                      <ul class="am-menu-sub am-collapse  am-avg-sm-4 ">
+                          <li class="">
+                            <a  class="" >按价格从高到低</a>
+                          </li>
+                          <li class="">
+                            <a  class="" >按价格从低到高</a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </nav>
+       <div class="am-tabs-bd product">
+           <div data-tab-panel-0 class="am-tab-panel am-active pro-content">
+                <div class="pro-card" v-for="pro of list" :key="pro.buyer+pro.hot">
+                        <a>
+                            <div class="pic_frame">
+                                <img :src="pro.pic"/>
+                            </div>
+                            <div class="info_frame">
+                                <p>{{pro.pname}}</p>
+                                <div>
+                                    <p>￥{{pro.price | filterMoney}}</p> 
+                                    <span>付款人数：{{pro.buyer}}</span> 
+                                </div>
+                            </div>
+                        </a>
+                  
                     </div>
                 </div>
-            </a>
-      
+
+           <div data-tab-panel-1 class="am-tab-panel pro-content">
+                <div class="pro-card" v-for="pro of list" :key="pro.price">
+                        <a>
+                            <div class="pic_frame">
+                                <img :src="pro.pic"/>
+                            </div>
+                            <div class="info_frame">
+                                <p>{{pro.pname}}</p>
+                                <div>
+                                    <p>￥{{pro.price | filterMoney}}</p> 
+                                    <span>付款人数：{{pro.buyer}}</span> 
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+           </div>
         </div>
-    </div>
-    </div>
-    </section>
+</section>
 </div>
 </template>
 <script>
@@ -63,44 +122,8 @@
         margin-top:1rem;
         padding-bottom:1.5rem
     }
-    .pro-top{
-        display:flex;
-        justify-content:space-around;
-
-    }
-    .pro-top>div{
-        padding:0.2rem;
-        width:5rem;
-        height:2.5rem;
-         text-align:center;
-         font-weight:bold;
-    }
-    .pro-top>div>a{
-       color:rgb(223, 70, 95);
-    }
-    .product{
-        background:rgba(255, 255, 255, 0.55);
-    }
-    /*选项框*/
-    .select{
-        display:flex;
-        justify-content:space-evenly;
-        padding-top:0.6rem;
-    }
-    .select>div{
-        width:28%;
-       
-        font-size:18px;
-        text-align:center;
-    }
-    .select>div>i{
-        display:inline-block;
-        border-top:1px solid #000;
-        border-right:1px solid #000;
-        width:0.5rem;
-        height:0.5rem;
-        transform:rotate(135deg);
-        margin:0.3rem 1.1rem
+    .am-menu-nav>li>ul>li{
+    width:14rem
     }
     /*内容*/
     .product{
@@ -130,16 +153,16 @@
     }
     .pro-content>.pro-card>a>.info_frame>p{
         font-size: 15px;
-        height:2.8rem;
+        height:3.5rem;
         flex-wrap: wrap;
     
     	font-weight: bold;
         overflow: hidden;
-text-overflow: ellipsis;
-display:-webkit-box; 
--webkit-box-orient:vertical; 
--webkit-line-clamp:2; 
-       width:13rem;
+        text-overflow: ellipsis;
+        display:-webkit-box; 
+        -webkit-box-orient:vertical; 
+        -webkit-line-clamp:2; 
+        width:13rem;
     }
     .pro-content>.pro-card>a>.info_frame>div>p{
         font-size:17px;

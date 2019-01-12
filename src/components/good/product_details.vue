@@ -1,7 +1,7 @@
 <template>
     <section>
         <header class="header"> 
-                <a><span class="mui-icon mui-icon-back"></span></a>
+                <a @click="back"><span class="mui-icon mui-icon-back"></span></a>
                 <a><span class="mui-icon mui-icon-star"></span></a>
         </header>
         <div class="mask" v-show = "tasteShow" @click="choiceTaste"></div>
@@ -12,7 +12,7 @@
         </div>
         <div class="all-info">
         <div class="details-title">
-            <div class="t-price">价格:￥{{title[0].price | twoZero}}</div>
+            <div class="t-price">价格:￥{{title[0].price | filterMoney}}</div>
             <div class="t-name">{{title[0].title}}</div>
             <div class="t-info">
                 <p>快递:{{title[0].free}}</p>
@@ -29,7 +29,7 @@
                 <div class="choice_taste" v-show="tasteShow">
                     <div><img :src="taste[dex].small_pic" alt="">
                         <div>
-                            <p>￥{{taste[dex].price | twoZero}}</p>
+                            <p>￥{{taste[dex].price*selectNum | filterMoney}}</p>
                             <p>{{taste[dex].taste}}</p>
                             <p>库存:300</p>
                         </div>
@@ -37,9 +37,14 @@
                     <div>
                         <p  v-for = "(tas,index) of taste" :key="tas.ttid" @click="getTaste(index)">{{tas.taste}}</p>
                     </div>
+                    <div class="mui-numbox">
+                            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                            <input class="mui-input-numbox" type="number" v-model="selectNum"/>
+                            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                    </div>
                     <div>
                         <button type ="button">立即购买</button>
-                        <button type ="button">加入购物车</button>
+                        <button type ="button" @click="insertCart">加入购物车</button>
                     </div>
                 </div>
                 
@@ -62,7 +67,14 @@
                 </div>
             </div>
         </div>
-        <div class="star"></div>
+        <div class="star">
+            <p>商品评分:</p>
+                <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-xingxing"></use>
+                      </svg>
+                      <p>4.5
+                      </p>
+        </div>
         <div class="details-info">
                 <div class="info-pic" v-for = "ipic of info" :key="ipic.iid">
                         <img :src="ipic.pic" alt="">
@@ -83,19 +95,12 @@
                 taste:[{items:"加载中...",text:"加载中..."}],
                 tasteShow:false,
                 dex:[0],
-                startPointX: 0,
-                changePointX: 0,
+                selectNum:1,
                 showIndex: 0,
                 paraShow:false
             }
         },
-        filters:{
-            twoZero(value){
-                value = Number(value);
-                return value.toFixed(2)
-
-            }
-        },
+      
         methods:{
             getMsg(){
                 this.axios.get("http://127.0.0.1:3000/details?pid=13").then(result=>{
@@ -115,14 +120,14 @@
             getTaste(index){
                this.dex = index;
             },
-            // slider(){
-            //     let gallery = mui('.mui-slider');
-            //     gallery.slider({
-            // interval:0
-            // });
-            // },
             getPara(){
                 this.paraShow=!this.paraShow
+            },
+            back(){
+                this.$router.go(-1);
+            },
+            insertCart(){
+
             }
         },
         created() {
@@ -257,19 +262,19 @@
         line-height: 1.9rem;
         border-radius:10%;
     }
-    .details-para>.choice_taste>div:nth-child(3){
+    .details-para>.choice_taste>div:nth-child(4){
+        margin-top:1rem;
         text-align: right
     }
-    .details-para>.choice_taste>div:nth-child(3)>button{
+    .details-para>.choice_taste>div:nth-child(4)>button{
         text-align: center;
-      
         width:9.5rem;
         height:3rem;
         background:rgba(216, 79, 74, 0.849);
         color:#fff;
         border-radius: 10%
     }
-    .details-para>.choice_taste>div:nth-child(3)>button:first-child{
+    .details-para>.choice_taste>div:nth-child(4)>button:first-child{
         background:rgba(236, 70, 48, 0.849);
     }
     /* 参数详细 */
@@ -307,5 +312,19 @@
        height:37rem;
        margin-left:-1.2rem;
        margin-top:1rem
+   }
+   /* 评分 */
+   .star{
+       display:flex;
+       margin:2rem 0
+   }
+   .star>svg{
+       color:rgb(226, 183, 40);
+       width:2rem;
+       height:2rem;
+       margin-top:-0.2rem
+   }
+   .star>p{
+       font-size:18px
    }
 </style>

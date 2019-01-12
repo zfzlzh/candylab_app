@@ -4,18 +4,21 @@ import router from './router'
 import icons from './assets/icon/iconfont.js'
 import icons_user from './assets/icon/user_iconfont.js'
 import icons_info from './assets/icon/info_iconfont.js'
+import star from './assets/icon/star.js'
 import rightOrWrong from './assets/icon/rightOrWrong.js'
 import camera from './assets/icon/camera.js'
+import tab from './assets/icon/tabbar.js'
 import store from './store/store.js'
 import {Toast} from "mint-ui";
+import fliterMoney from './components/commentJs/filterMoney.js';
+import Mui from 'vue-awesome-mui'
+import 'vue-awesome-mui/mui/dist/css/mui.css'
+import "vue-awesome-mui/mui/examples/hello-mui/css/icons-extra.css"
 
+Vue.use(Mui)
 Vue.config.productionTip = false
+Vue.filter("filterMoney",fliterMoney)
 
-// 导入 MUI 的样式表， 和 Bootstrap 用法没有差别
-import './assets/mui/css/mui.css'
-// 导入 MUI 的样式表，扩展图标样式，购物车图标
-// 还需要加载图标字体文件
-import './assets/mui/css/icons-extra.css'
 
 
 
@@ -91,13 +94,14 @@ setTimeout(function(){
 
 
 //1、引入mint-ui Header组件
-import {Header,Swipe,SwipeItem,Button} from "mint-ui"
+import {Header,Swipe,SwipeItem,Button,} from "mint-ui"
 //2、注册Header组件
 Vue.component(Header.name,Header);
 //3、注册Swipe,SwipeItem组件
 Vue.component(Swipe.name,Swipe);
 Vue.component(SwipeItem.name,SwipeItem);
 Vue.component(Button.name,Button);
+
 
 //3.1引入axios库（VueResource）
 import axios from "axios"

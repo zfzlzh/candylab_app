@@ -5,25 +5,44 @@
      <!--主体-->
      <router-view></router-view>
      <!--尾部-->
-     <nav class="mui-bar mui-bar-tab">
-       <router-link class="mui-tab-item mui-active" href="#tabbar" to="/Home" >
-         <span class="mui-icon mui-icon-home"></span>
-         <span class="mui-tab-label">首页</span>
-       </router-link>
-       <router-link class="mui-tab-item" href="#tabbar-with-chat" to="/message">
-         <span class="mui-icon mui-icon-person"></span>
-         <span class="mui-tab-label">消息</span>
-       </router-link>
-       <router-link class="mui-tab-item" href="#tabbar-with-contact" to="/Cart" >
-         <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-                 <span class="mui-badge"></span></span>
-         <span class="mui-tab-label">购物车</span>
-       </router-link>
-       <router-link class="mui-tab-item" href="#tabbar-with-contact" to="/User" >
-         <span class="mui-icon mui-icon-search"></span>
-         <span class="mui-tab-label">用户中心</span>
-       </router-link>
-     </nav>
+     <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+      id="">
+      <ul class="am-navbar-nav am-cf am-avg-sm-4">
+          <li :data-id=0 @click="changeColor" >
+            <router-link to="/Home" >
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-geren1"></use>
+                  </svg>
+                <span class="am-navbar-label">首页</span>
+            </router-link>
+          </li>
+          <li :data-id=1 @click="changeColor">
+            <router-link to="/message"   >
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-xiaoxi"></use>
+                  </svg>
+                <span class="am-navbar-label">消息</span>
+            </router-link>
+          </li>
+          <li :data-id=2   @click="changeColor">
+            <router-link to="/Cart"  >
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-gouwuche"></use>
+                  </svg>
+                <span class="am-navbar-label">购物车</span>
+            </router-link>
+          </li>
+          <li >
+            <router-link to="/User">
+                <svg class="icon" aria-hidden="true" >
+                    <use xlink:href="#icon-morentouxiang"></use>
+                  </svg>
+                <span class="am-navbar-label">用户</span>
+            </router-link>
+          </li>
+      </ul>
+  </div>
+    
   </div>
  </template>
  <script>
@@ -31,18 +50,26 @@
      export default {
          data(){
              return{
- 
+                hasActive:-1
              }
          },
          methods:{
-            
+            changeColor(){
+                this.hasActive =-this.hasActive;
+                console.log(1)
+            }
          },
          created() {
            
          },
+       mounted() {
+ 
+       },
+        
      }
  </script>
  <style>
+       * { touch-action: none; } 
  .icon {
     width: 1em; height: 1em;
     vertical-align: -0.15em;
@@ -62,45 +89,25 @@
      margin-top: -1rem;
    
  }
- nav.mui-bar{
-     position: fixed
+ .am-navbar{
+     height:5rem;
  }
-  .mui-bar-tab .mui-tab-item-tao.mui-active {
-     color: #007aff;
-  }
- .mui-bar-tab .mui-tab-item-tao {
-     display: table-cell;
-     overflow: hidden;
-     width: 1%;
-     height: 50px;
-     text-align: center;
-     vertical-align: middle;
-     white-space: nowrap;
-     text-overflow: ellipsis;
-     color: #929292;
+ .am-navbar>.am-navbar-nav{
+    background:#fff;
+    
  }
- .mui-bar-tab .mui-tab-item-tao .mui-icon {
-     top: 3px;
-     width: 24px;
-     height: 24px;
-     padding-top: 0;
-     padding-bottom: 0;
-     color:#e12341
+ .am-navbar>.am-navbar-nav>li>a>span{
+     font-size:15px
  }
- 
- .mui-bar-tab .mui-tab-item-tao .mui-icon~.mui-tab-label {
-    font-size:11px;
-    display:block;
-    overflow:hidden;
-    text-overflow:ellipsis;
- 
+ .am-navbar>.am-navbar-nav>li>a>svg{
+     width:2rem;
+     height:2rem;
  }
- .mui-card,.msg{
-    box-shadow:6px 6px 11px rgba(0, 0, 0, .3)
+ .am-navbar>.am-navbar-nav>li>a{
+     padding:0.5rem;
+   color:rgb(209, 40, 40);
+   
  }
- .mui-card-header{
-     color:rgba(0, 0, 0, 0.781);
-     font-weight: bold
- }
+
  </style>
  
