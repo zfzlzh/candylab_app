@@ -10,14 +10,16 @@ import camera from './assets/icon/camera.js'
 import tab from './assets/icon/tabbar.js'
 import store from './store/store.js'
 import {Toast} from "mint-ui";
-import fliterMoney from './components/commentJs/filterMoney.js';
+import filterMoney from './components/commentJs/filterMoney.js';
+import filterDate from './components/commentJs/filterDate.js';
 import Mui from 'vue-awesome-mui'
 import 'vue-awesome-mui/mui/dist/css/mui.css'
 import "vue-awesome-mui/mui/examples/hello-mui/css/icons-extra.css"
 
 Vue.use(Mui)
 Vue.config.productionTip = false
-Vue.filter("filterMoney",fliterMoney)
+Vue.filter("filterMoney",filterMoney)
+Vue.filter("filterDate",filterDate)
 
 
 
@@ -116,24 +118,24 @@ import VueResourse from 'vue-resource';
 Vue.use(VueResourse);
 
 
-//7.创建日期类型过滤器
-//val原先日期对象
-Vue.filter('datatimeFilter',function(val){
-  //7.1创建日期对象
-  var data=new Date(val)
-  //7.2获取年月日分秒
-  var y=data.getFullYear();
-  var m=data.getMonth()+1;
-  var d=data.getDate();
-  var h=data.getHours();
-  var mi=data.getMinutes();
-  var s=data.getSeconds();
-  //7.3月日格式判断07 08 09 10
-  if(m<10){m='0'+m;}
-  if(d<10){d='0'+d;}
-  //7.4拼接字符串返回
-  return `${y}-${m}-${d} ${h}:${mi}:${s}`;
-})
+// //7.创建日期类型过滤器
+// //val原先日期对象
+// Vue.filter('datatimeFilter',function(val){
+//   //7.1创建日期对象
+//   var data=new Date(val)
+//   //7.2获取年月日分秒
+//   var y=data.getFullYear();
+//   var m=data.getMonth()+1;
+//   var d=data.getDate();
+//   var h=data.getHours();
+//   var mi=data.getMinutes();
+//   var s=data.getSeconds();
+//   //7.3月日格式判断07 08 09 10
+//   if(m<10){m='0'+m;}
+//   if(d<10){d='0'+d;}
+//   //7.4拼接字符串返回
+//   return `${y}-${m}-${d} ${h}:${mi}:${s}`;
+// })
 
 
 new Vue({

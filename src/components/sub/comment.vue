@@ -14,7 +14,8 @@
       <section>
           <div class="mui-card send">
               <div class="mui-card-header title">
-                  <div><img src="" alt=""></div>
+                  <div><img :src="list[0].pic" alt=""></div>
+                  <div>{{list[0].pname}}</div>
                   <div><svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-xingxing"></use>
                   </svg></div>
@@ -34,7 +35,7 @@
                 </div>
               </div>
               <div class="mui-card-footer no-name">
-                <div><a><span class="mui-icon mui-icon-checkmarkempty"></span></a><p>匿名</p></div>
+                <div><i></i><p>匿名</p></div>
                 <div>你的评价能帮到其他的小伙伴哦</div>
               </div>
             </div>
@@ -56,10 +57,10 @@
 </template>
 <script>
 import {Toast} from "mint-ui"
-  export default{
+  export default {
     data(){
       return {
-        list:[],
+        list:[{items:"加载中...",text:"加载中..."}],
         msg:""   //评论内容双向绑定
       }
     },
@@ -67,9 +68,18 @@ import {Toast} from "mint-ui"
       back(){
                 this.$router.go(-1)
             },
+            getInfo(){
+              let pid=this.$route.query.pid;
+              this.axios.get("http://127.0.0.1:3000/comment?pid="+pid).then(
+                result=>{
+                  this.list = result.data;
+                }
+              )
+            },
+            
     },
     created() {
-     
+    this.getInfo();
     },
   }
 </script>
@@ -102,10 +112,23 @@ import {Toast} from "mint-ui"
       padding:0rem 0 1rem
     }
    .title{
-     height:4rem
+     height:5rem
    }
    .title>div:first-child{
-     width:30%
+     width:27%;
+     height:100%
+   }
+   .title div img{
+     padding-left:1rem;
+     width:70%;
+     height:100%;
+   }
+   .title>div:nth-child(2){
+    overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width:9rem;
+        margin-left:-12rem
    }
     /* 输入框 */
     textarea{
@@ -140,6 +163,13 @@ import {Toast} from "mint-ui"
     }
     .no-name>div{
       margin-top:0.5rem
+    }
+    .no-name>div>i{
+      display:inline-block;
+      border:1px solid #000;
+      border-radius:50%;
+      width:1.5rem;
+      height:1.5rem
     }
     .no-name>div:first-child>a{
       border:1px solid rgb(231, 61, 61);

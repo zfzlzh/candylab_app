@@ -4,8 +4,8 @@
 <section>
         <div data-am-widget="tabs" class="am-tabs am-tabs-d2">
        <ul class="am-tabs-nav am-cf">
-           <li class="am-active"><a href="[data-tab-panel-0]">全部</a></li>
-           <li class=""><a href="[data-tab-panel-1]">本周热卖</a></li>
+           <li class="am-active"><a >全部</a></li>
+           <li class=""><a >本周热卖</a></li>
        </ul>
        <nav data-am-widget="menu" class="am-menu  am-menu-default"> 
             <a href="javascript: void(0)" class="am-menu-toggle">

@@ -2,7 +2,6 @@
     <div class="home">
        <header-home></header-home>
        <section>
-           
         <mt-swipe :auto="3000">
             <mt-swipe-item v-for="item of imgs" :key="item.cid">
                 <router-link :to="item.href">

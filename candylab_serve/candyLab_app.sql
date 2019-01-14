@@ -180,3 +180,35 @@ INSERT INTO details_taste VALUES(NULL,13,"3种口味混搭随机发","http://127
 (NULL,13,"樱桃味","http://127.0.0.1:3000/img/details/cavendish/taste/16.jpg",23),
 (NULL,13,"无糖什锦味 175g","http://127.0.0.1:3000/img/details/cavendish/taste/12.jpg",23),
 (NULL,13,"杂果味（覆盆子，草莓，苹果，柠檬，香橙）","http://127.0.0.1:3000/img/details/cavendish/taste/21.jpg",60);
+
+
+
+
+CREATE TABLE candy_cart (
+     cid INT PRIMARY KEY AUTO_INCREMENT,
+    uid INT,
+    title VARCHAR(100),
+    price DECIMAL(5,2),
+    p_num  INT,
+    pic VARCHAR(20),
+    taste VARCHAR(20),
+    day
+);
+INSERT INTO candy_cart VALUES(NULL,1,'UHA悠哈味觉水果汁软糖52g4袋酷露露爆浆零食品橡皮糖果','23',1,'http://127.0.0.1:3000/img/index/UHA悠哈味觉水果汁软糖52g4袋酷露露爆浆零食品橡皮糖果.jpg','葡萄味'),
+(NULL,1,,'德国糖果嘉云糖进口 嘉云水果糖创意果汁硬糖 966g','23',2,'http://127.0.0.1:3000/img/index/德国糖果嘉云糖进口 嘉云水果糖创意果汁硬糖 966g.jpg','新版什锦味'),
+(NULL,1,'加拿大特产天然枫糖块散装硬糖枫叶糖儿童零食进口糖果','23',1,'http://127.0.0.1:3000/img/index/加拿大特产天然枫糖块散装硬糖枫叶糖儿童零食进口糖果.jpg','原味'),
+(NULL,1,'都市牧场爽口含片无糖薄荷糖口气清新糖柠檬糖果小零食口香糖4瓶','69','1','http://127.0.0.1:3000/img/index/都市牧场爽口含片无糖薄荷糖口气清新糖柠檬糖果小零食口香糖4瓶.jpg','原味');
+
+CREATE TABLE candy_buy(
+    bid INT PRIMARY KEY AUTO_INCREMENT,
+    uid INT,
+    pname VARCHAR(120),
+    price DECIMAL(5,2),
+    taste VARCHAR(20),
+    pic VARCHAR(250),
+    buy_time DATE,
+    pid INT
+);
+INSERT INTO candy_buy VALUES(NULL,1,'进口kinder健达缤纷乐牛奶榛果威化夹心建达巧克力条43g30包','56','原味30包','http://127.0.0.1:3000/img/index/进口kinder健达缤纷乐牛奶榛果威化夹心建达巧克力条43g30包.jpg','2018-12-20',32),
+(NULL,1,'特价俄罗斯进口kdv巧克力kpokaht紫皮糖年货喜糖果零食品大礼包邮','100','原味','http://127.0.0.1:3000/img/index/特价俄罗斯进口kdv巧克力kpokaht紫皮糖年货喜糖果零食品大礼包邮.jpg','2018-12-20',25),
+(NULL,1,'春光食品 海南特产 糖果 特制椰子糖 东郊椰林 椰子味 袋 228g','12','12袋装','http://127.0.0.1:3000/img/index/春光食品 海南特产 糖果 特制椰子糖 东郊椰林 椰子味 袋 228g3.jpg','2018-12-20',22);

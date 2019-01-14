@@ -77,7 +77,7 @@
                                         <use xlink:href="#icon-yifahuo"></use>
                                       </svg>
                                         <div class="mui-media-body">待收货</div></a></li>
-                                <li class=" mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/comment">
+                                <li class=" mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/commentInfo">
                                     <svg class="icon" aria-hidden="true">
                                         <use xlink:href="#icon-pingjia"></use>
                                       </svg>

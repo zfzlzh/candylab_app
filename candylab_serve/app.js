@@ -55,7 +55,7 @@ res.send(result);
 app.get('/login',(req,res)=>{
   let uname =req.query.uname;
   let upwd = req.query.upwd;
-  let sql="SELECT uid,uname FROM user_info WHERE uname = ? AND upwd = ?";
+  let sql="SELECT uid,uname,upwd,avatar,nickname FROM user_info WHERE uname = ? AND upwd = ?";
   pool.query(sql,[uname,upwd],(err,result)=>{
     if (err) throw err;
     if(result.length>0){
@@ -66,19 +66,7 @@ app.get('/login',(req,res)=>{
     }
   })
 })
-//获取登陆信息
-app.get('/getMsg',(req,res)=>{
-  let uname =req.query.uname;
-  let sql="SELECT uid,uname,upwd,avatar,nickname FROM user_info WHERE uname = ? ";
-  pool.query(sql,[uname],(err,result)=>{
-    if (err) throw err;
-    if(result.length>0){
-      res.send(result)
-    }else{
-      res.send({code:0,msg:"获取信息错误"})
-    }
-  })
-})
+
 //获取注册信息
 //对比用户名
 app.get('/findUser',(req,res)=>{
@@ -172,5 +160,46 @@ app.get("/details",(req,res)=>{
     })
     })
   })})
+  })
+})
+//购物车
+app.get("/cart",(req,res)=>{
+  let uid = req.query.uid;
+  let c_sql="SELECT cid,title,price,p_num,pic,taste,day FROM candy_cart WHERE uid=?";
+  pool.query(c_sql,[uid],(err,result)=>{
+    if(err) throw err;
+    res.send(result)
+  })
+})
+//购物车数量更新
+app.get("/updateCart",(req,res)=>{
+  let cid= req.query.cid;
+  let p_num = req.query.p_num;
+  let u_sql="UPDATE candy_cart SET p_num = ? WHERE cid=?"
+  pool.query(u_sql,[p_num,cid],(err,result)=>{
+    if(err) throw err;
+    if(result.affectedRows > 0){
+      res.send({code:1});
+     }else{
+      res.send({code:-1});
+     }
+  })
+})
+//未评论
+app.get("/not_say",(req,res)=>{
+  let uid=req.query.uid;
+  console.log(uid)
+  let b_sql="SELECT bid,pid,pname,price,taste,pic,buy_time FROM candy_buy WHERE uid=? ORDER BY buy_time";
+  pool.query(b_sql,[uid],(err,result)=>{
+    if(err) throw err;
+    res.send(result)
+  })
+})
+app.get("/comment",(req,res)=>{
+  let pid=req.query.pid;
+  let co_sql="SELECT bid,uid,pname,pic FROM candy_buy WHERE pid=?";
+  pool.query(co_sql,[pid],(err,result)=>{
+    if(err) throw err;
+    res.send(result)
   })
 })

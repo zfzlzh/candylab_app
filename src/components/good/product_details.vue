@@ -103,7 +103,8 @@
       
         methods:{
             getMsg(){
-                this.axios.get("http://127.0.0.1:3000/details?pid=13").then(result=>{
+                let pid =this.$route.query.pid;
+                this.axios.get("http://127.0.0.1:3000/details?pid="+pid).then(result=>{
                    let {pic,title,info,para,comment,taste} = result.data;
                    this.pic=pic;
                    this.title= title;
