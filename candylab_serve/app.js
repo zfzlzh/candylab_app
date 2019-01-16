@@ -185,11 +185,26 @@ app.get("/updateCart",(req,res)=>{
      }
   })
 })
+//插入购物车
+app.get("/insert_cart",(req,res)=>{
+  let taste =req.query.taste;
+  console.log(taste)
+  let uid =req.query.uid;
+  let title = req.query.title;
+  let price = req.query.price;
+  let pic = req.query.pic;
+  let p_num = req.query.p_num;
+  let in_sql="INSERT INTO `candy_cart`(`cid`,`uid`,`title`,`price`,`p_num`,`pic`,`taste`,`day`)VALUES(NULL,?,?,?,?,?,?,now()) ";
+  pool.query(in_sql,[uid,title,price,p_num,pic,taste],(err,result)=>{
+    if(err) throw err;
+    console.log(result)
+    res.send({code:1,msg:"添加购物车成功"})
+  })
+})
 //未评论
 app.get("/not_say",(req,res)=>{
   let uid=req.query.uid;
-  console.log(uid)
-  let b_sql="SELECT bid,pid,pname,price,taste,pic,buy_time FROM candy_buy WHERE uid=? ORDER BY buy_time";
+  let b_sql="SELECT bid,pid,pname,price,taste,pic,buy_time FROM candy_buy WHERE uid=? AND isSend=0 ORDER BY buy_time";
   pool.query(b_sql,[uid],(err,result)=>{
     if(err) throw err;
     res.send(result)
@@ -201,5 +216,37 @@ app.get("/comment",(req,res)=>{
   pool.query(co_sql,[pid],(err,result)=>{
     if(err) throw err;
     res.send(result)
+  })
+})
+//提交评论
+app.post('/sendCom',(req,res)=>{
+ let obj = req.body;
+ let uid = obj.uid;
+ let pid = obj.pid;
+ let uname = obj.uname;
+ let avatar = obj.avatar;
+ let content = obj.content;
+ let send_sql = "INSERT INTO `details_comment`(`cid`,`pid`,`uid`,`who`,`avatar`,`content`) VALUES(NULL,?,?,?,?,?) ";
+ pool.query(send_sql,[pid,uid,uname,avatar,content],(err,result)=>{
+   if(err) throw err;
+   if(result.affectedRows>0)
+   res.send({code:1,msg:"评论成功"})
+   else
+   res.send({code:-1,msg:"评论失败"})
+ })
+})
+//隐藏以评论
+app.get('/ready_say',(req,res)=>{
+  let isSend = req.query.isSend;
+  let uid = req.query.uid
+  let pid = req.query.pid
+  console.log(isSend)
+  console.log(uid)
+  console.log(pid)
+  let re_sql="UPDATE candy_buy SET isSend = ? WHERE uid=? AND pid=?";
+  pool.query(re_sql,[isSend,uid,pid],(err,result)=>{
+    if(err) throw err;
+   if(affectedRows>0)
+    res.send({code:1,msg:"评论成功"})
   })
 })

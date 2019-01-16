@@ -15,7 +15,7 @@ import filterDate from './components/commentJs/filterDate.js';
 import Mui from 'vue-awesome-mui'
 import 'vue-awesome-mui/mui/dist/css/mui.css'
 import "vue-awesome-mui/mui/examples/hello-mui/css/icons-extra.css"
-
+window.Toast = Toast;
 Vue.use(Mui)
 Vue.config.productionTip = false
 Vue.filter("filterMoney",filterMoney)

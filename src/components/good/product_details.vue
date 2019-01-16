@@ -35,12 +35,12 @@
                         </div>
                     </div>
                     <div>
-                        <p  v-for = "(tas,index) of taste" :key="tas.ttid" @click="getTaste(index)">{{tas.taste}}</p>
+                        <p  v-for = "(tas,index) of taste" :key="tas.ttid" @click="getTaste(index,$event)">{{tas.taste}}</p>
                     </div>
                     <div class="mui-numbox">
-                            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                            <button class="mui-btn mui-btn-numbox-minus" type="button" @click="numSub">-</button>
                             <input class="mui-input-numbox" type="number" v-model="selectNum"/>
-                            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                            <button class="mui-btn mui-btn-numbox-plus" type="button" @click="numAdd">+</button>
                     </div>
                     <div>
                         <button type ="button">立即购买</button>
@@ -95,9 +95,11 @@
                 taste:[{items:"加载中...",text:"加载中..."}],
                 tasteShow:false,
                 dex:[0],
+                dex_taste:"",
                 selectNum:1,
                 showIndex: 0,
-                paraShow:false
+                paraShow:false,
+                money:0
             }
         },
       
@@ -118,8 +120,11 @@
             choiceTaste(){
               this.tasteShow=!this.tasteShow
             },
-            getTaste(index){
+            getTaste(index,event){
                this.dex = index;
+               let el = event.currentTarget;
+               this.dex_taste = el.innerHTML;
+               console.log(this.dex_taste)
             },
             getPara(){
                 this.paraShow=!this.paraShow
@@ -128,8 +133,32 @@
                 this.$router.go(-1);
             },
             insertCart(){
-
-            }
+                let taste =this.dex_taste;
+                let user = JSON.parse(sessionStorage.getItem("uname"));
+                let uid = user.uid;
+                let title = this.title[0].title;
+                console.log(title)
+                let price = this.selectNum*this.taste[this.dex].price;
+                console.log(price)
+                let pic = this.taste[this.dex].small_pic;
+                let p_num = this.selectNum;
+                this.axios.get(`http://127.0.0.1:3000/insert_cart?uid=${uid}&title=${title}&price=${price}&pic=${pic}&p_num=${p_num}&taste=${taste}`).then(result=>{
+                    if(result.data.code == 1){
+                        Toast(result.data.msg)
+                    }
+                })
+            },
+             //加减
+           numAdd(e){
+                   if(this.selectNum<999){
+                       this.selectNum++;
+                   }
+           },
+           numSub(e){
+                   if(this.selectNum>1){
+                    this.selectNum--;
+                   } 
+           },
         },
         created() {
             this.getMsg();

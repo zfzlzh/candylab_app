@@ -146,7 +146,7 @@ header>p{
 }
 .msg>div>div>svg{
     font-size:31px;
-    margin:0.5rem auto;
+    margin:0.2rem auto;
     color:#fff
 }
 
@@ -179,7 +179,7 @@ header>p{
    color:rgb(218, 43, 43)
 }
 .msg_date{
-    width:15%;
+    width:19%;
     font-size:10px;
     color:#444
 }

@@ -141,11 +141,13 @@ INSERT INTO details_para VALUES(NULL,13,"储藏方法：阴凉干燥处，避免
 CREATE TABLE details_comment(
   cid INT PRIMARY KEY AUTO_INCREMENT,
   pid INT,
+  uid INT,
   content VARCHAR(250),
   avatar VARCHAR(120),
-  who VARCHAR(10)
+  who VARCHAR(10),
+  pic VARCHAR(250) DEFAULT ""
 );
-INSERT INTO details_comment VALUES(NULL,13,"很好吃的糖果，收藏了，吃完再来买,非常推荐","http://127.0.0.1:3000/img/avatar/1.jpg","tom");
+INSERT INTO details_comment VALUES(NULL,13,1,"很好吃的糖果，收藏了，吃完再来买,非常推荐","http://127.0.0.1:3000/img/avatar/1.jpg","tom");
 
 CREATE TABLE details_taste(
   ttid INT PRIMARY KEY AUTO_INCREMENT,
@@ -207,7 +209,8 @@ CREATE TABLE candy_buy(
     taste VARCHAR(20),
     pic VARCHAR(250),
     buy_time DATE,
-    pid INT
+    pid INT,
+    isSend INT
 );
 INSERT INTO candy_buy VALUES(NULL,1,'进口kinder健达缤纷乐牛奶榛果威化夹心建达巧克力条43g30包','56','原味30包','http://127.0.0.1:3000/img/index/进口kinder健达缤纷乐牛奶榛果威化夹心建达巧克力条43g30包.jpg','2018-12-20',32),
 (NULL,1,'特价俄罗斯进口kdv巧克力kpokaht紫皮糖年货喜糖果零食品大礼包邮','100','原味','http://127.0.0.1:3000/img/index/特价俄罗斯进口kdv巧克力kpokaht紫皮糖年货喜糖果零食品大礼包邮.jpg','2018-12-20',25),

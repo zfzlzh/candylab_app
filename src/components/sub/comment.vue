@@ -6,7 +6,7 @@
               <a><span class="mui-icon mui-icon-undo"></span></a>
               <p>发表评论</p>
           </div>
-          <div>
+          <div @click="sendComment">
             发布
           </div>
         </div>
@@ -16,13 +16,14 @@
               <div class="mui-card-header title">
                   <div><img :src="list[0].pic" alt=""></div>
                   <div>{{list[0].pname}}</div>
-                  <div><svg class="icon" aria-hidden="true">
+                  <!-- :class=" { ' on ' : cur >= n } " 含义是当cur >= n成立的时候把 on 赋给元素的 class 属性 -->
+                  <div><p><svg class="icon" aria-hidden="true" v-for="n of 5" :class="{'on':cur1 >= n}" @click="selectStar1(n)">
                     <use xlink:href="#icon-xingxing"></use>
-                  </svg></div>
+                  </svg></p></div>
               </div>
               <div class="mui-card-content">
                 <div class="mui-card-content-inner">
-                    <textarea placeholder='最多吐槽120个字' maxlength="120" v-model="msg"></textarea>
+                    <textarea placeholder='最多吐槽120个字' maxlength="120" v-model="content"></textarea>
                     <div class="camera">
                         <div><svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-shexiangji
@@ -43,10 +44,10 @@
                 <div class="mui-card-header">评价</div>
                 <div class="mui-card-content">
                   <div class="mui-card-content-inner">
-                    <div><p>服务评价</p><p><svg class="icon" aria-hidden="true">
+                    <div><p>服务评价</p><p><svg class="icon" aria-hidden="true" v-for="n of 5" :class="{'in':cur2 >= n}" @click="selectStar2(n)">
                       <use xlink:href="#icon-xingxing"></use>
                     </svg></p></div>
-                    <div><p>物流评价</p><p><svg class="icon" aria-hidden="true">
+                    <div><p>物流评价</p><p><svg class="icon" aria-hidden="true" v-for="n of 5" :class="{'up':cur3 >= n}" @click="selectStar3(n)">
                       <use xlink:href="#icon-xingxing"></use>
                     </svg></p></div>
                   </div>
@@ -57,26 +58,61 @@
 </template>
 <script>
 import {Toast} from "mint-ui"
+import qs from 'qs'
   export default {
     data(){
       return {
         list:[{items:"加载中...",text:"加载中..."}],
-        msg:""   //评论内容双向绑定
+       content:"",   //评论内容双向绑定
+       cur1:-1,
+       cur2:-1,
+       cur3:-1
+       
       }
     },
     methods:{
       back(){
-                this.$router.go(-1)
+            this.$router.go(-1)
             },
-            getInfo(){
-              let pid=this.$route.query.pid;
-              this.axios.get("http://127.0.0.1:3000/comment?pid="+pid).then(
-                result=>{
-                  this.list = result.data;
+      getInfo(){
+          let pid=this.$route.query.pid;
+          this.axios.get("http://127.0.0.1:3000/comment?pid="+pid).then(
+            result=>{
+              this.list = result.data;
                 }
               )
             },
-            
+      sendComment(){
+          let user =JSON.parse(sessionStorage.getItem("uname")) ;
+          let uid= user.uid;
+          let uname = user.uname;
+          let avatar = user.avatar;
+          let pid=this.$route.query.pid;
+          let content = this.content
+          this.axios.post("http://127.0.0.1:3000/sendCom",qs.stringify({uname,uid,avatar,pid,content},{headers:{"Content-Type": "application/x-www-form-urlencoded;charset=utf-8"}})).then(result=>{
+                if(result.data.code == 1){
+                  let isSend = 1;
+                  this.axios.get("http://127.0.0.1:3000/ready_say?isSend="+isSend+'&pid='+pid+'&uid='+uid).then(result=>{
+                    if(result.data.code ==1){
+                      Toast(result.data.msg)
+                    this.$router.go(-1)
+                    }
+                   
+                  })
+                }else{
+                  Toast("评论失败")
+                }
+          })
+      },
+      selectStar1(n){
+        this.cur1 = n
+      },
+      selectStar2(n){
+        this.cur2 = n
+      },
+      selectStar3(n){
+        this.cur3 = n
+      }
     },
     created() {
     this.getInfo();
@@ -128,7 +164,22 @@ import {Toast} from "mint-ui"
         text-overflow: ellipsis;
         white-space: nowrap;
         width:9rem;
-        margin-left:-12rem
+        margin-left:-2rem
+   }
+   .title>div:nth-child(3){
+     width:44%
+   }
+   .title>div:nth-child(3)>p>svg{
+     margin: 0.2rem 0 0 0.5rem
+   }
+   svg.on{
+     fill:#f55550
+   }
+   svg.in{
+     fill:#f55550
+   }
+   svg.up{
+     fill:#f55550
    }
     /* 输入框 */
     textarea{

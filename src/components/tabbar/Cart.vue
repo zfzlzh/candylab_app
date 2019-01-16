@@ -11,12 +11,12 @@
         </header>
         <section>
             <div class="cart">
-                <div class="mui-card" v-for = "(cartItem,index) of cart" :key="cartItem.day">
+                <div class="mui-card" v-for = "(cartItem,index) of cart" :key="cartItem.day+index">
                         <div class=" mui-card-content">
                             <div class="mui-card-content-inner">
-                                <div class="check" @click="clickItem(index)" v-model="clickBox">
-                                    <input type="checkbox">
-                                </div>
+                               
+                                    <input type="checkbox" v-model="clickBox" :value="cartItem.cid" @change="clickItem(index)">
+                              
                                 <div class="good_pic">
                                     <img :src="cartItem.pic" alt="">
                                 </div>
@@ -61,7 +61,7 @@
         <footer>
             <div class="selectAll"  >
                 <div class="footer_circle">
-                    <input type="checkbox"  v-model="isAllClicked" @click="clickAll">
+                    <input type="checkbox"  v-model="isAllClicked" @change="clickAll">
                 </div>
                 <p>全选</p>
             </div>
@@ -70,13 +70,12 @@
                 <mt-button size="large">结算</mt-button>
             </div>
             <div class="accounts" v-show="needDelete==1">
-                <mt-button size="large" @click="deleteIt">删除</mt-button>
+                <mt-button size="large">删除</mt-button>
             </div>
         </footer>
     </div>
 </template>
 <script>
-   import {Toast} from "mint-ui"
     export default {
         data(){
             return{ 
@@ -85,10 +84,22 @@
                 money:0,
                 isAllClicked:false,
                 clickBox:[],
-                needDelete:-1
+                needDelete:-1,
+                total:[]
             }
         },
-       
+       watch:{
+           clickBox:{
+               handler(){
+                if(this.clickBox.length == this.cart.length){
+                    this.isAllClicked = true
+                }else{
+                    this.isAllClicked = false
+                }
+               },
+               deep:true
+           }
+       },
         methods:{
             //获取推荐
             getList(){
@@ -104,13 +115,7 @@
                    this.cart = result.data;
                })
            },
-           //点击
-           clickItem(index){
-               let cartList = this.cart;
-               cartList[index].selected = !cartList[index].selected;
-               this.getAccounts();
-               console.log(cartList[index].selected)
-           },
+          
            //加减
            numAdd(e){
                let cid = e.target.dataset.cid;
@@ -146,47 +151,48 @@
            getAccounts:function(){
                     let sum = 0
                     for(let item of this.cart){
-                        if(item.selected)
+                        if(item.checked)
                         sum+=item.price*item.p_num;
                     }
                     this.money = sum
                 },
+                 //单选
+           clickItem(index){
+               let cartList = this.cart;
+               cartList[index].checked = !cartList[index].checked;
+               this.getAccounts();
+           },
                 //全选
             clickAll(){
-                console.log(this.isAllClicked)
-    console.log(this.cart)
                 if(this.clickBox.length !== 0 ){
                     this.clickBox = []
                 }
                 if(this.isAllClicked){
-                    this.cart.forEach(singleCart => {
-                        console.log(singleCart)
-                        this.clickBox.push(singleCart)
-                    });
-                }
+                    this.cart.forEach(function(singleCart){
+                        this.clickBox.push(singleCart.cid)
+                       let total =[singleCart.price*singleCart.p_num]
+                        for(let p=0;p<total.length;p++){
+                           this.money+= total[p]
+                        }
+                    },this)
+                    
+                }else{
+                    this.clickBox = []  
+                    this.money = 0
+                    };
             },
             //删除按钮出现
             changeDelete(){
                 this.needDelete = -this.needDelete
             },
-            //删除
-            deleteIt(){
-                
-            }  
+           
             
     },
     created(){
                 this.getList();
                this.getCart();
             }, 
-    // watch:{
-    //     singleClick(){
-    //        if(this.cart.length == this.clickBox.length){
-    //            console.log(this.cart)
-    //        }
-    //         deep:true
-    //     }
-    // },
+    
 }
 </script>
 <style scoped>
@@ -236,7 +242,7 @@ header>p{
    padding:8px
 }
 
-.check>input{
+.cart .mui-card .mui-card-content-inner>input{
     width:2rem;
     height:2rem;
     margin-top:3.5rem;
@@ -271,9 +277,14 @@ header>p{
    
 }
 .good_content>.good_price>p{
-    margin-right:1rem
+    margin-right:1rem;
+   
 }
-
+.good_content>.good_price>p:first-child{
+    overflow:hidden;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+}
 /*你可能喜欢*/
 .you-like{
     position: relative;
